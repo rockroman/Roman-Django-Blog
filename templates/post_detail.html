@@ -1,4 +1,5 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% block content %}
 
 {% load crispy_forms_tags %}
 
@@ -64,7 +65,7 @@
                         <strong class="text-secondary"><i class="far fa-comments"></i>
                             <!-- Our total_comments variable goes before the closing strong tag -->
                             {{ total_comments }}
-                         </strong>
+                        </strong>
                         {% endwith %}
                     </div>
                 </div>
@@ -77,7 +78,7 @@
         </div>
     </div>
     <div class="row">
-        
+
         <div class="col-md-8 card mb-4  mt-3 ">
             <h3>Comments:</h3>
             <div class="card-body">
@@ -96,6 +97,11 @@
                     {{ comment.body | linebreaks }}
                 </div>
                 <!-- Our for loop ends here -->
+
+                <button type="button" data-item_id="{{comment.id}}" class="btn btn-danger comment_del "
+                    data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Delete
+                </button>
                 {% endfor %}
             </div>
         </div>
@@ -121,6 +127,37 @@
             </div>
         </div>
     </div>
+    <!-- delete modal -->
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+
+                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                    <a href="" class="btn btn-danger" id="comment_del_btn">delete</a>
+
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- delete modal -->
+
+
+
+    <!-- delete modal -->
+
 </div>
 
 {% endblock content %}
