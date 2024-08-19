@@ -3,15 +3,53 @@ from django.views import generic, View
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from .models import Post,Comment
-from .forms import CommentForm
+from .forms import CommentForm,EmailForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.mail import send_mail
 # Create your views here.
 
 
-class PostList(generic.ListView):
+# class PostList(generic.ListView):
+#     model = Post
+#     queryset = Post.objects.filter(status=1).order_by('-created_on')
+#     template_name = 'index.html'
+#     paginate_by = 6
+
+
+class PostList(LoginRequiredMixin, generic.ListView):
     model = Post
     queryset = Post.objects.filter(status=1).order_by('-created_on')
     template_name = 'index.html'
     paginate_by = 6
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['email_form'] = EmailForm()  # Add the email form to the context
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = EmailForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+            recipient = form.cleaned_data['recipient']
+            user_email = request.user.email  # Get the email of the logged-in user
+
+            # Send the email
+            try:
+                send_mail(
+                    subject,
+                    message,
+                    user_email,  # Sender (current user's email)
+                    [recipient],  # Recipient list
+                    fail_silently=False,
+                )
+                messages.success(request, "Email sent successfully!")
+            except Exception as e:
+                messages.error(request, f"An error occurred: {e}")
+
+        # Redirect or render the page with the form
+        return self.get(request, *args, **kwargs)
 
 
 class PostDetail(View):
