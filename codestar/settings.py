@@ -30,16 +30,16 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
-ALLOWED_HOSTS = ['roman-codestar-blog.herokuapp.com', 'localhost', '8000-rockroman-romandjangobl-fg79plsm1hn.ws.codeinstitute-ide.net' ]
+ALLOWED_HOSTS = ['127.0.0.1','roman-codestar-blog.herokuapp.com', 'localhost', '8000-rockroman-romandjangobl-fg79plsm1hn.ws.codeinstitute-ide.net' ]
 
  # Add Render.com URL to allowed hosts
-RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
-if RENDER_EXTERNAL_HOSTNAME:
-   ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+# RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+# if RENDER_EXTERNAL_HOSTNAME:
+#    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 
 # Application definition
@@ -85,7 +85,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
+    # 'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'codestar.urls'
@@ -126,7 +126,7 @@ else:
     }
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://*.codeinstitute-ide.net",
+    "http://127.0.0.1:8000/*",
     "https://*.herokuapp.com"
 ]
 

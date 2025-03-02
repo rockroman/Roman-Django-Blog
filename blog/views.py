@@ -9,14 +9,7 @@ from django.core.mail import send_mail
 # Create your views here.
 
 
-# class PostList(generic.ListView):
-#     model = Post
-#     queryset = Post.objects.filter(status=1).order_by('-created_on')
-#     template_name = 'index.html'
-#     paginate_by = 6
-
-
-class PostList(LoginRequiredMixin, generic.ListView):
+class PostList(generic.ListView):
     model = Post
     queryset = Post.objects.filter(status=1).order_by('-created_on')
     template_name = 'index.html'
